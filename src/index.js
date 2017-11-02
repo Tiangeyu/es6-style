@@ -1,3 +1,4 @@
+require('babel-polyfill');
 function testLet(){
     {
         let a =1;
@@ -89,4 +90,27 @@ function restTest(){
         }
     }
     test3(1,2,3,4,'a'); 
+}
+
+function ArrayTest(){
+    function add(x, y) {
+        return x + y;
+    }
+        
+    const numbers = [4, 38];
+    console.log(add(...numbers))   
+}
+
+function ArrayTest1(){
+    for (let index of ['a', 'b'].keys()) {
+        console.log(index);
+    }
+                           
+    for (let elem of ['a', 'b'].values()) {
+        console.log(elem);
+    }
+                          
+    for (let [index, elem] of ['a', 'b'].entries()) {
+        console.log(index, elem);
+    }  
 }
