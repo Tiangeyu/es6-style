@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .w1000{
+            margin: 0 auto;
+            width: 980px;
+            background:#fffcfc;
+            padding:0 10px;
+        }
+        p{
+            text-indent: 30px;
+            word-spacing: 5px;
+            line-height: 30px;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            padding: 0 20px;
+            color: #333;
+            background: #f5f5d5;
+        }
+        h2{
+            text-align: center;
+            line-height: 100px;
+            color: #323232;
+        }
+        h4{
+            line-height: 36px;
+            color: #9b1e1e;
+            padding-top: 10px;
+        }
+        pre{
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 0.7rem;
+            line-height: 1.2;
+            color: #FFF;
+            background: #111;
+            border-radius: 5px;
+        }
+        pre code{
+            color: #a6e22e;
+            font-size: 16px;
+            font-weight: normal;
+            font-family: Consolas,"Courier New",Courier,FreeMono,monospace;
+            background: #111;
+            border-radius: 2px;
+        }
+        button{
+            padding: 3px 5px;
+            margin-left: 10px;
+            border-radius: 3px;
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="w1000">
+        <h2>ES6--下一代javascript语言</h2>
+        <p>ECMAScript 6.0（以下简称 ES6）是 JavaScript 语言的下一代标准，已经在2015年6月正式发布了。它的目标，是使得 JavaScript 语言可以用来编写复杂的大型应用程序，成为企业级开发语言。</p>
+        <h4>babel转码器</h4>
+        <p>各大浏览器的最新版本对ES6 的支持度已经越来越高了，超过90%的 ES6 语法特性都实现了。但是考虑到现有环境是否支持,为此还是做了相应的处理,Babel 是一个广泛使用的 ES6 转码器，可以将 ES6 代码转为 ES5 代码，从而在现有环境执行。</p>
+        <p>配置.babelrc文件,存放在项目根目录下</p>
+        <pre>
+            <code>
+               {
+                   "presets": [],
+                   "plugins": []
+               }
+            </code>
+        </pre>
+        <p style="padding-top: 10px;">配置package.json文件:$ npm init</p>
+        <pre>
+            <code>
+                "scripts": {
+                    "test": "echo \"Error: no test specified\" && exit 1",
+                    "build": "babel src/index.js -o dist/index.js"
+                },
+                "devDependencies": {
+                    "babel-cli": "^6.26.0",
+                    "babel-preset-es2015": "^6.24.1"
+                }
+            </code>
+        </pre>
+        <p style="padding-top: 10px;">$ npm run build 完成ES6 => ES5的编译</p>
+        <h4>变量声明:let 和 const </h4>
+        <p>使用let和const声明的变量特性:</p>
+        <p>1- 只在声明所在的块级作用域内有效 <button onclick="testLet()">测试</button></p>
+        <pre>
+            <code>
+                function testLet(){
+                    {
+                        let a = 1;
+                        var b = 2;
+                    }
+                    console.log("b="+b);
+                    console.log("a="+a);   
+                }
+            </code>
+        </pre>
+        <p>2- 不可重复声明, 若在同一代码块中声明变量,会造成js运行异常</p>
+        <p>3- 使用const声明的变量是一个只读的常量, 一旦声明, 常量的值就不能改变,否则,同上</p>
+        <h4>变量的解构赋值</h4>
+        <p>模式匹配 -- 只要等号两边的模式相同，左边的变量就会被赋予对应的值<button onclick="pattern()">测试pattern</button><button onclick="pattern1()">测试pattern1</button></p>
+        <pre>
+            <code>
+                完全解构
+                function pattern() {                  
+                    let a, b, rest;
+                    [a, b, ...rest] = [1,2,3,4,5,6];
+                    console.log(a,b,rest);                                   
+                }
+
+                不完全解构
+                function pattern1() {
+                    let a, b, c;
+                    [a, b, c] = [1,2,3,4,5,6];
+                    console.log(a,b,c);  
+                }
+            </code>
+        </pre>
+        <p style="padding-top: 10px;">解构赋值 --交换变量的值(用途)<button onclick="patternUse()">测试</button></p>
+        <pre>
+            <code>
+                let x = 1;
+                let y = 2;
+                
+                [x, y] = [y, x];
+                console.log("x="+x, "y="+y)
+            </code>
+        </pre>
+        <p style="padding-top: 10px;">解构赋值 --提取JSON数据(用途)<button onclick="patternUse1()">测试</button></p>
+        <pre>
+            <code>
+                let jsonData = {
+                    id: 42,
+                    status: "OK",
+                    data: [867, 5309]
+                };
+                      
+                let { id, status, data: number } = jsonData;    
+
+                上述等同于  let { id:id, status:status, data:number } = jsonData
+
+                console.log(id, status, number);
+            </code>
+        </pre>
+        <h4>字符串扩展</h4>
+        <p>这里仅强调最常用到的字符串模板  --极大简化字符串和变量拼接<button onclick="stringTest()">测试</button></p>
+        <pre>
+            <code>
+                let user={
+                    name:'list',
+                    info:'hello world'
+                };
+
+                console.log(`i am ${user.name},${user.info}`);
+            </code>
+        </pre>
+        <p style="padding-top: 10px;">如果使用模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中。<button onclick="stringTest1()">测试</button></p>
+        <pre>
+            <code>
+                const A = 'first';
+                const B = "second";
+                let str = `< ul>
+                                < li> ${A} < /li>
+                                < li> ${B} < /li>
+                            < /ul>`
+            
+                console.log(str)
+            </code>
+        </pre>
+        <p style="padding-top: 10px;">模板字符串中嵌入变量，需要将变量名写在${}之中。大括号内部可以放入任意的JavaScript表达式，可以进行运算，以及引用对象属性。模板字符串之中还能调用函数。-- `foo ${fn()} bar`</p>
+        <h4>函数的扩展</h4>
+        <p>ES6 允许为函数的参数设置默认值，即直接写在参数定义的后面。<button onclick="fncTest()">测试</button></p>
+        <pre>
+            <code>
+                function log(x, y = 'World') {
+                    console.log(x, y);
+                }
+                
+                log('Hello') 
+                log('Hello', 'China') 
+                log('Hello', '') 
+            </code>
+        </pre>
+        <p style="padding-top: 10px;">与解构赋值默认值结合使用<button onclick="fncTest1()">测试</button></p>
+        <pre>
+            <code>
+                function foo({x, y = 5}) {     
+
+                    // {x,y=5} == {x:x, y:y=5}
+                    // 前面的x,y只是为了与键名匹配, 后面的x,y是输出的值
+
+                    console.log(x, y);  
+                }
+                    
+                foo({})            
+                foo({x: 1})         
+                foo({x: 1, y: 2})   
+                foo()               
+            </code>
+        </pre>
+        <p style="padding-top: 10px;">rest 参数搭配的变量是一个数组，该变量将多余的参数放入数组中。<button onclick="restTest()">测试</button></p>
+        <pre>
+            <code>
+                function test3(...arg){
+                    for(let v of arg){
+                        console.log('rest',v);
+                    }
+                }
+                test3(1,2,3,4,'a');              
+            </code>
+        </pre>
+        <h4>数组的扩展</h4>
+        <p>扩展运算符（spread）是三个点（...）。它好比 rest 参数的逆运算，<font color="red">将一个数组转为用逗号分隔的参数序列</font>。</p>
+        <pre>
+            <code>
+                function add(x, y) {
+                    return x + y;
+                }
+                    
+                const numbers = [4, 38];
+                add(...numbers)          
+            </code>
+        </pre>
+    </div>
+    <script src="./dist/index.js"></script>
+</body>
+</html>
